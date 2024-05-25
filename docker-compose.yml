@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16.3-alpine3.20
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/tomas/.podmandata/ar/productos/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ar
+      - POSTGRES_PASSWORD=ar..,
+      - POSTGRES_DB=ar
