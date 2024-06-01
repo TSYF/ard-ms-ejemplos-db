@@ -124,5 +124,64 @@ router.post(
     }
 )
 
+//* Update
+router.put(
+    "/:id",
+    async (req, res) => {
+        const { id } = req.params;
+
+        const example = req.body;
+        console.table(example);
+
+        if (!matches(example, exampleMatcher)) {
+            const CODE = 422;
+            
+            const error: ErrorBody = {
+                private: "La forma del cuerpo no corresponde al Ejemplo",
+                public: new CommonResponseBody(
+                    false,
+                    CODE,
+                    {
+                        message: "La forma del cuerpo no corresponde al Ejemplo"
+                    }
+                )
+            }
+            console.table(example);
+            console.log(error.private);
+            console.error(error.errorObject)
+            res.status(CODE).send(error.public);
+            return;
+        }
+
+        console.table(example);
+
+        const updatedExample = (await db
+            .update(exampleModel)
+            .set(example)
+            .where(eq(exampleModel.id, +id))
+            .returning())[0];
+
+        if (!updatedExample) {
+            const CODE = 500;
+
+            const error: ErrorBody = {
+                private: "Actualización no retorna fila actualizada",
+                public: new CommonResponseBody(
+                    false,
+                    CODE,
+                    {
+                        message: "¡Ha ocurrido un problema inesperado!"
+                    }
+                )
+            }
+            console.log(error.private);
+            console.error(error.errorObject)
+            res.status(CODE).send(error.public);
+            return;
+        }
+
+        res.status(200).send(updatedExample);
+    }
+)
 
 export default router;
