@@ -2,6 +2,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Client } from "pg";
 import { envs } from "../config/env";
+import { pgSchema } from "drizzle-orm/pg-core";
 
 // const client = new Client({
 //   connectionString: "postgres://user:password@host:port/db",
@@ -17,6 +18,7 @@ const client = new Client({
 });
 
 (async () => await client.connect())();
+export const $schema = pgSchema(envs.DB_SCHEMA);
 const db = drizzle(client);
 
 export { db, client };

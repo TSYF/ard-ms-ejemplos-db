@@ -9,4 +9,4 @@ app.use(express.json());
 const { PORT, DEFAULT_API_PREFIX } = envs;
 
 app.use(`${DEFAULT_API_PREFIX}`, exampleRouter);
-app.listen(PORT || 8000, () => console.log("MS-EJEMPLOS-DB STARTED"));
+app.listen(PORT, () => console.log("MS-EJEMPLOS-DB STARTED"));

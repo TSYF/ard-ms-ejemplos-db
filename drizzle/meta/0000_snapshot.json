@@ -1,12 +1,12 @@
 {
-  "id": "b82aeb47-759c-42ad-b290-71ca8ae92e65",
+  "id": "ecd43384-3a92-49aa-9c0a-97ec2b38ba3c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
   "tables": {
-    "public.example": {
+    "ar.example": {
       "name": "example",
-      "schema": "",
+      "schema": "ar",
       "columns": {
         "id": {
           "name": "id",
