@@ -1,8 +1,7 @@
 import { ErrorBody } from '@/types/ErrorBody';
 import { CommonResponseBody } from '@/types/CommonResponseBody';
 import express from 'express';
-import { matches } from '@/utils';
-import { Example, exampleMatcher } from '../types/example';
+import { Example } from '../types/example';
 import { db } from '@/db';
 import { exampleModel } from '@/db/schemas';
 import { eq, inArray } from 'drizzle-orm';
@@ -76,30 +75,7 @@ router.post(
         const example = req.body;
         console.table(example);
 
-        if (!matches(example, exampleMatcher)) {
-            const CODE = 422;
-            
-            const error: ErrorBody = {
-                private: "La forma del cuerpo no corresponde al Ejemplo",
-                public: new CommonResponseBody(
-                    false,
-                    CODE,
-                    {
-                        message: "La forma del cuerpo no corresponde al Ejemplo"
-                    }
-                )
-            }
-            console.table(example);
-            console.log(error.private);
-            console.error(error.errorObject)
-            res.status(CODE).send(error.public);
-            return;
-        }
-
-        console.table(example);
-
         const insertedExample = (await db.insert(exampleModel).values(example).returning())[0];
-
 
         if (!insertedExample) {
             const CODE = 500;
@@ -131,28 +107,6 @@ router.put(
         const { id } = req.params;
 
         const example = req.body;
-        console.table(example);
-
-        if (!matches(example, exampleMatcher)) {
-            const CODE = 422;
-            
-            const error: ErrorBody = {
-                private: "La forma del cuerpo no corresponde al Ejemplo",
-                public: new CommonResponseBody(
-                    false,
-                    CODE,
-                    {
-                        message: "La forma del cuerpo no corresponde al Ejemplo"
-                    }
-                )
-            }
-            console.table(example);
-            console.log(error.private);
-            console.error(error.errorObject)
-            res.status(CODE).send(error.public);
-            return;
-        }
-
         console.table(example);
 
         const updatedExample = (await db

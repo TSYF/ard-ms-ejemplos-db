@@ -1,5 +1,5 @@
 import { text } from "drizzle-orm/pg-core";
-import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import { serial, varchar } from "drizzle-orm/pg-core";
 import { $schema } from ".";
 
 export const exampleModel = $schema.table("example", {
