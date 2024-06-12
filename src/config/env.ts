@@ -10,4 +10,6 @@ export const envs = {
     DB_DATABASE:                get("DB_DATABASE").default("postgres").asString(),
     DB_SCHEMA:                  get("DB_SCHEMA").default("public").asString(),
     DEFAULT_API_PREFIX:         get("DEFAULT_API_PREFIX").asString(),
+    BODY_SIZE_LIMIT:            get("BODY_SIZE_LIMIT").default("2mb").asString(),
+    IMAGES_ENDPOINT:            get("IMAGES_ENDPOINT").required().asString()
 }

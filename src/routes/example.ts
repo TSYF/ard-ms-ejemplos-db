@@ -1,10 +1,11 @@
 import { ErrorBody } from '@/types/ErrorBody';
 import { CommonResponseBody } from '@/types/CommonResponseBody';
 import express from 'express';
-import { Example } from '../types/example';
+import { Example } from '../types/Example';
 import { db } from '@/db';
 import { exampleModel } from '@/db/schemas';
 import { eq, inArray } from 'drizzle-orm';
+import { updateImages, uploadImages } from '@/utils';
 const router = express.Router();
 
 //* Index
@@ -73,7 +74,8 @@ router.post(
     async (req, res) => {
 
         const example = req.body;
-        console.table(example);
+
+        example.image = (await uploadImages([ example.image ]))[0];
 
         const insertedExample = (await db.insert(exampleModel).values(example).returning())[0];
 
@@ -107,7 +109,7 @@ router.put(
         const { id } = req.params;
 
         const example = req.body;
-        console.table(example);
+        example.image = (await updateImages(+id, [ example.image ]))[0];
 
         const updatedExample = (await db
             .update(exampleModel)
