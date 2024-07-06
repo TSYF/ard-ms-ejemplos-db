@@ -5,7 +5,7 @@ import { Example } from '../types/Example';
 import { db } from '@/db';
 import { exampleModel } from '@/db/schemas';
 import { eq, inArray } from 'drizzle-orm';
-import { updateImages, uploadImages } from '@/utils';
+import { deleteImages, updateImages, uploadImages } from '@/utils';
 const router = express.Router();
 
 //* Index
@@ -150,6 +150,8 @@ router.delete(
             .delete(exampleModel)
             .where(eq(exampleModel.id, +id))
             .returning())[0];
+
+        deleteImages([ example.image ]);
 
         if (!example) {
             const CODE = 500;

@@ -35,3 +35,17 @@ export async function updateImages(id: number, images: string[]): Promise<string
         body: JSON.stringify(payload)
     }).then(res => res.json())
 }
+
+export async function deleteImages(images: string[]): Promise<void> {
+    const payload   = {
+        uriList: images,
+    }
+    
+    return await fetch(IMAGES_ENDPOINT, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    }).then(res => res.json())
+}
